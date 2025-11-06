@@ -1,0 +1,36 @@
+{
+  "model_type": "t5",
+  "load_checkpoint_from": "google-t5/t5-base",
+  "dataset_name":"AL-GR/AL-GR-Tiny",
+  "data_file":"/home/admin/workspace/aop_lab/data/AL-GR-Tiny/train_data/s1_tiny.csv",
+  "streaming": true,
+  "custom_args": {
+    "instruction_column": "system",
+    "input_column": "user",
+    "output_column": "answer",
+    "max_length": 1068,
+    "max_source_length": 1024,
+    "max_target_length": 32
+  },
+  "training_args": {
+    "do_train": true,
+    "num_train_epochs": 4,
+    "max_steps": 200000,
+    "per_device_train_batch_size": 80,
+    "save_total_limit": 2,
+    "save_steps": 10000,
+    "save_only_model": false,
+    "logging_steps": 1000,
+    "bf16": true,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "learning_rate": 2e-4,
+    "lr_scheduler_type": "constant",
+    "dataloader_num_workers": 4,
+    "accelerator_config":{
+      "split_batches": false,
+      "dispatch_batches": false
+    }
+  }
+}
