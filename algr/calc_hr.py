@@ -30,6 +30,8 @@ def calculate_average_hit_rate_k(file_path, k_list, sid_to_ids_map, decoder_only
     """
     total_count = 0
     hr_count = [0] * len(k_list)
+    #ohrs = []*len(k_list)
+    ohrs = [[] for _ in range(len(k_list))]
     with open(file_path, "r", encoding="utf-8") as f:
         for line in tqdm(f):
             line = line.strip()
@@ -44,12 +46,15 @@ def calculate_average_hit_rate_k(file_path, k_list, sid_to_ids_map, decoder_only
                     hit_count, true_count = calculate_hit_rate_k(generate_text, answer, k_list, sid_to_ids_map)
                     total_count += true_count
                     hr_count = [a + b for a, b in zip(hit_count, hr_count)]
+                    for i, a in enumerate(hit_count):
+                        ohrs[i].append(a / true_count)
 
                 except json.JSONDecodeError as e:
                     print(f"Invalid JSON line: {line}")
                     print(f"Error: {e}")
     
-    return [hrc / total_count if total_count > 0 else 0 for hrc in hr_count]
+    return [sum(ohr) / len(ohr) if len(ohr) > 0 else 0 for ohr in ohrs]
+    #return [hrc / total_count if total_count > 0 else 0 for hrc in hr_count]
 
 
 def convert_csv_to_map(data):
@@ -94,10 +99,6 @@ def main():
     # sid_to_ids_map = {
     #     "C3936C1881C5331": ["HiIRC", "xx", "xx"]
     # }
-    if args.nebula:
-        item_sid_data = pd.read_csv(os.path.join(args.dataset_name, args.item_sid_file))
-    else:
-        item_sid_data = load_dataset(dataset_name, data_files=item_sid_file)
     
     ## Write the processed file to the local computer so that it will be faster the next time you run it.
     local_sid2item_file = f"./data/sid2item_v_{os.path.basename(item_sid_file).split('.')[0]}.json"
@@ -109,6 +110,10 @@ def main():
         print("load data sucess!")
     else:
         print("process data firstly")
+        if args.nebula:
+            item_sid_data = pd.read_csv(os.path.join(args.dataset_name, args.item_sid_file))
+        else:
+            item_sid_data = load_dataset(dataset_name, data_files=item_sid_file)
         sid_to_ids_map = convert_csv_to_map(item_sid_data)
         # write JSON  file
         with open(local_sid2item_file, "w", encoding="utf-8") as f:
@@ -121,7 +126,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    
-    
-    
