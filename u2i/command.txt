@@ -1,0 +1,24 @@
+
+[Done] CUDA_VISIBLE_DEVICES=1 nohup  python3 run.py --model_name=basemodel --lr=5e-3 --epochs=5 >./ckpt/basemodel/log.txt 2>&1 &
+
+#test_faiss
+[Training] CUDA_VISIBLE_DEVICES=0 nohup  python3 run.py --model_name=sasrec_addfeat --lr=5e-3 --num_heads=4 --num_blocks=8 --epochs=5 --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_with_feat.csv >./ckpt/sasrec_addfeat_h4b8/log.txt 2>&1 &
+[Training] CUDA_VISIBLE_DEVICES=1 nohup  python3 run.py --model_name=sasrec_addfeat --lr=5e-3 --epochs=5 --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_with_feat.csv >./ckpt/sasrec_addfeat_h1b1/log.txt 2>&1 &
+
+#forge
+[Training] CUDA_VISIBLE_DEVICES=0 nohup  python3 run.py --model_name=sasrec --lr=5e-3 --epochs=5 >./ckpt/sasrec_h1b1/log.txt 2>&1 &
+[Training] CUDA_VISIBLE_DEVICES=1 nohup  python3 run.py --model_name=bert4rec --lr=5e-3 --epochs=5 >./ckpt/bert4rec_h1b1/log.txt 2>&1 &
+[Training] CUDA_VISIBLE_DEVICES=2 nohup  python3 run.py --model_name=sasrec --lr=5e-3 --epochs=5 --num_heads=4 --num_blocks=4 >./ckpt/sasrec_h4b4/log.txt 2>&1 &
+[Training] CUDA_VISIBLE_DEVICES=3 nohup  python3 run.py --model_name=sasrec --lr=5e-3 --epochs=5 --num_heads=4 --num_blocks=8 >./ckpt/sasrec_h4b8/log.txt 2>&1 &
+[Training] CUDA_VISIBLE_DEVICES=4 nohup  python3 run.py --model_name=hstu --lr=5e-3 --epochs=5 --num_heads=4 --num_blocks=8 >./ckpt/hstu_h4b8/log.txt 2>&1 &
+
+
+
+
+CUDA_VISIBLE_DEVICES=0 python3 predict.py --model_name=basemodel --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/basemodel/basemodel-20251118-174721-0.pth 
+CUDA_VISIBLE_DEVICES=1 python3 predict.py --model_name=sasrec --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/sasrec_h1b1/sasrec-20251119-230854-4.pth
+CUDA_VISIBLE_DEVICES=2 python3 predict.py --model_name=sasrec --num_heads=4 --num_blocks=4 --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/sasrec_h4b4/sasrec-20251119-230858-4.pth
+CUDA_VISIBLE_DEVICES=3 python3 predict.py --model_name=sasrec --num_heads=4 --num_blocks=8 --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/sasrec_h4b8/sasrec-20251119-230900-4.pth
+
+CUDA_VISIBLE_DEVICES=4 python3 predict.py --model_name=bert4rec --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/bert4rec_h1b1/bert4rec-20251119-230856-4.pth
+CUDA_VISIBLE_DEVICES=5 python3 predict.py --model_name=hstu --num_heads=4 --num_blocks=8 --data_path=/home/admin/workspace/aop_lab/data/AL-GR-Tiny/u2i/s1_tiny_test.csv --state_dict_path=/home/admin/workspace/aop_lab/grs_recom/u2i/ckpt/hstu_h4b8/hstu-20251119-230902-4.pth
