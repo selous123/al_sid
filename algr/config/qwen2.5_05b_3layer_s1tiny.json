@@ -1,5 +1,5 @@
 {
-  "model_type": "t5",
+  "model_type": "qwen2_5",
   "load_checkpoint_from": "Qwen/Qwen2.5-0.5B-Instruct",
   "dataset_name":"AL-GR/AL-GR-Tiny",
   "data_file":"/home/admin/workspace/aop_lab/data/AL-GR-Tiny/train_data/s1_tiny.csv",
@@ -14,8 +14,8 @@
   },
   "training_args": {
     "do_train": true,
-    "num_train_epochs": 4,
-    "max_steps": 200000,
+    "num_train_epochs": 1,
+    "max_steps": 12500,
     "per_device_train_batch_size": 80,
     "save_total_limit": 2,
     "save_steps": 10000,
@@ -25,8 +25,8 @@
     "adam_beta1": 0.9,
     "adam_beta2": 0.999,
     "adam_epsilon": 1e-8,
-    "learning_rate": 2e-4,
-    "lr_scheduler_type": "constant",
+    "learning_rate": 1e-5,
+    "lr_scheduler_type": "linear",
     "dataloader_num_workers": 4,
     "accelerator_config":{
       "split_batches": false,
