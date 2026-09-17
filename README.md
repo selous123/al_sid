@@ -297,11 +297,12 @@ If you have any questions or encounter difficulties, we welcome you to contact u
 Please cite the following paper if you find our code helpful.
 
 ```
-@article{fu2025forge,
-  title={FORGE: Forming Semantic Identifiers for Generative Retrieval in Industrial Datasets},
-  author={Fu, Kairui and Zhang, Tao and Xiao, Shuwen and Wang, Ziyang and Zhang, Xinming and Zhang, Chenchi and Yan, Yuliang and Zheng, Junjun and others},
-  journal={arXiv preprint arXiv:2509.20904},
-  year={2025}
+@inproceedings{fu2026forge,
+  title={Forge: Forming semantic identifiers for generative retrieval in industrial datasets},
+  author={Fu, Kairui and Zhang, Tao and Xiao, Shuwen and Wang, Ziyang and Zhang, Xinming and Zhang, Chenchi and Yan, Yuliang and Zheng, Junjun and Kong, Xiangheng and Zhang, Shengyu and others},
+  booktitle={Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V. 2},
+  pages={8858--8869},
+  year={2026}
 }
 ```
 
